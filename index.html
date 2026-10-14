@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chúc Mừng Sinh Nhật Người Yêu Của Anh - Mai Phương 🐱💖</title>
+  <meta name="description" content="Trang web sinh nhật chủ đề mèo cưng lãng mạn dành tặng Mai Phương tròn 20 tuổi với các tương tác thổi nến, cắt bánh, thư chúc sinh nhật và video kỷ niệm.">
+  
+  <link rel="stylesheet" href="style.css">
+  <link rel="preload" as="image" href="cat_idle_waiting.png?v=2">
+  <link rel="preload" as="image" href="cat_pulling_rope.png?v=2">
+  <link rel="preload" as="image" href="cat_happy_done.png?v=2">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐱</text></svg>">
+</head>
+<body>
+
+  <!-- Background Canvas for Hearts, Cat Paws, Sparkles & Fireworks -->
+  <canvas id="fx-canvas"></canvas>
+
+  <!-- ==========================================================================
+       0. MÀN HÌNH BẮT ĐẦU: CÁNH CỬA ĐÓNG & Ổ KHÓA SỐ HÌNH MÈO (LĂN DÒ SỐ)
+       ========================================================================== -->
+  <div class="door-lock-viewport" id="door-viewport">
+    
+    <!-- Top Fullscreen Button -->
+    <div class="door-top-bar">
+      <button type="button" class="btn-door-fullscreen" id="btn-fullscreen">
+        <span>🖥️</span>
+        <span id="fullscreen-text">Bật Toàn Màn Hình (F11)</span>
+      </button>
+    </div>
+
+    <!-- 3D Realistic Luxury Double Doors -->
+    <div class="double-doors" id="double-doors">
+      
+      <!-- Left Door Leaf -->
+      <div class="door-panel left-door">
+        <!-- Vintage Brass Hinges -->
+        <div class="door-hinge top"></div>
+        <div class="door-hinge bottom"></div>
+
+        <!-- Beveled Wood Moldings -->
+        <div class="door-panels-stack">
+          <div class="recessed-panel panel-top">
+            <div class="panel-inner-glow"></div>
+          </div>
+          <div class="recessed-panel panel-mid">
+            <div class="panel-inner-carving">🌸 Mai Phương 🌸</div>
+          </div>
+          <div class="recessed-panel panel-bottom"></div>
+        </div>
+
+        <!-- Ornate Brass Handle & Hasp -->
+        <div class="door-handle left-handle">
+          <div class="handle-plate"></div>
+          <div class="handle-lever"></div>
+        </div>
+        <div class="hasp-plate left-hasp"></div>
+      </div>
+
+      <!-- Right Door Leaf -->
+      <div class="door-panel right-door">
+        <!-- Vintage Brass Hinges -->
+        <div class="door-hinge top"></div>
+        <div class="door-hinge bottom"></div>
+
+        <!-- Beveled Wood Moldings -->
+        <div class="door-panels-stack">
+          <div class="recessed-panel panel-top">
+            <div class="panel-inner-glow"></div>
+          </div>
+          <div class="recessed-panel panel-mid">
+            <div class="panel-inner-carving">🐾 Sweet 20 🐾</div>
+          </div>
+          <div class="recessed-panel panel-bottom"></div>
+        </div>
+
+        <!-- Ornate Brass Handle & Hasp -->
+        <div class="door-handle right-handle">
+          <div class="handle-plate"></div>
+          <div class="handle-lever"></div>
+        </div>
+        <div class="hasp-plate right-hasp">
+          <div class="hasp-staple-loop"></div>
+        </div>
+      </div>
+
+      <!-- Center Seam Shadow & Light Leak -->
+      <div class="door-seam-light"></div>
+    </div>
+
+    <!-- Cat-Shaped Combination Padlock (Ổ khóa hình mèo lăn dò số) -->
+    <div class="cat-padlock-wrapper" id="cat-padlock">
+      <div class="cat-shackle" id="cat-shackle"></div>
+      
+      <div class="cat-lock-body">
+        <!-- Brass Corner Rivets -->
+        <div class="lock-rivet tl"></div>
+        <div class="lock-rivet tr"></div>
+        <div class="lock-rivet bl"></div>
+        <div class="lock-rivet br"></div>
+
+        <div class="lock-cat-ear left">
+          <div class="ear-inner-rose"></div>
+        </div>
+        <div class="lock-cat-ear right">
+          <div class="ear-inner-rose"></div>
+        </div>
+
+        <div class="lock-cat-face">
+          <div class="cat-eye left"><div class="eye-shine"></div></div>
+          <div class="cat-nose-whiskers">
+            <span class="whiskers left">≡</span>
+            <span class="nose-heart">🐾</span>
+            <span class="whiskers right">≡</span>
+          </div>
+          <div class="cat-eye right"><div class="eye-shine"></div></div>
+        </div>
+
+        <!-- 6 Tumbler Dial Cylinders -->
+        <div class="tumbler-container">
+          <!-- Dial 0 -->
+          <div class="dial-column">
+            <button class="dial-btn up" data-dial="0" aria-label="Tăng số">▲</button>
+            <div class="dial-digit-window" id="dial-0">0</div>
+            <button class="dial-btn down" data-dial="0" aria-label="Giảm số">▼</button>
+          </div>
+          <!-- Dial 1 -->
+          <div class="dial-column">
+            <button class="dial-btn up" data-dial="1" aria-label="Tăng số">▲</button>
+            <div class="dial-digit-window" id="dial-1">0</div>
+            <button class="dial-btn down" data-dial="1" aria-label="Giảm số">▼</button>
+          </div>
+          <!-- Dial 2 -->
+          <div class="dial-column">
+            <button class="dial-btn up" data-dial="2" aria-label="Tăng số">▲</button>
+            <div class="dial-digit-window" id="dial-2">0</div>
+            <button class="dial-btn down" data-dial="2" aria-label="Giảm số">▼</button>
+          </div>
+          <!-- Dial 3 -->
+          <div class="dial-column">
+            <button class="dial-btn up" data-dial="3" aria-label="Tăng số">▲</button>
+            <div class="dial-digit-window" id="dial-3">0</div>
+            <button class="dial-btn down" data-dial="3" aria-label="Giảm số">▼</button>
+          </div>
+          <!-- Dial 4 -->
+          <div class="dial-column">
+            <button class="dial-btn up" data-dial="4" aria-label="Tăng số">▲</button>
+            <div class="dial-digit-window" id="dial-4">0</div>
+            <button class="dial-btn down" data-dial="4" aria-label="Giảm số">▼</button>
+          </div>
+          <!-- Dial 5 -->
+          <div class="dial-column">
+            <button class="dial-btn up" data-dial="5" aria-label="Tăng số">▲</button>
+            <div class="dial-digit-window" id="dial-5">0</div>
+            <button class="dial-btn down" data-dial="5" aria-label="Giảm số">▼</button>
+          </div>
+        </div>
+
+        <div class="lock-status-label" id="lock-status-label">🐾 Lăn dò 6 số để mở cửa 🐾</div>
+      </div>
+    </div>
+
+    <!-- Màn Hình Kết Thúc Trên Cánh Cửa (Khi hết video đóng cửa lại, có nút xoay ngược làm lại từ đầu) -->
+    <div class="door-finale-screen" id="door-finale-screen" style="display: none;">
+      <div class="finale-cat-badge">🐱❤️🐾</div>
+      <h2 class="finale-title">Mai Phương • Tuổi 20 Rạng Rỡ 💕</h2>
+      <p class="finale-sub">
+        Buổi tiệc sinh nhật đã khép lại trọn vẹn trong tình yêu thương của anh.<br>
+        Mãi mãi yêu em, cô gái tuyệt vời nhất của anh! ✨
+      </p>
+      <button class="btn-restart-journey" id="btn-restart-journey" title="Làm lại từ đầu">
+        <span class="restart-spin-icon">↺</span>
+        <span class="restart-label">Trải Nghiệm Lại Từ Đầu</span>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Nút Bật/Tắt Nhạc Nền Nhỏ Gọn Nằm Góc Phải (Không che nội dung) -->
+  <button class="floating-music-btn-icon" id="btn-music-toggle" title="Bật / Tắt bản tình ca 🎵" aria-label="Bật tắt nhạc">
+    <span class="music-icon-glyph">🎵</span>
+  </button>
+
+  <!-- ==========================================================================
+       CÁC CHƯƠNG TRUYỆN (STORYBOOK SCROLL CHAPTERS)
+       ========================================================================== -->
+  <main class="story-container">
+
+    <!-- CHƯƠNG 1: MỞ ĐẦU - CHÚC MỪNG SINH NHẬT MAI PHƯƠNG -->
+    <section class="chapter-section" id="chapter-1">
+      <div class="ch1-badge">
+        <span>🐾</span>
+        <span>CHÚC MỪNG SINH NHẬT EM YÊU</span>
+        <span>🐾</span>
+      </div>
+
+      <h1 class="ch1-title">Chúc Mừng Sinh Nhật Yêu Của Anh, <span class="ch1-name-highlight">Mai Phương</span> 💕</h1>
+
+      <p class="ch1-sub">
+        Chào tuổi 20 rạng rỡ và ngọt ngào nhất của công chúa mèo nhỏ của anh! ✨<br>
+        Anh đã chuẩn bị một hành trình nhỏ dành riêng cho em hôm nay.
+      </p>
+
+      <div class="cat-couple-card">
+        <img src="cute_cat_birthday.jpg" onerror="if(!this.dataset.t){this.dataset.t=1;this.src='assets/cute_cat_birthday.jpg'}" alt="Đôi mèo mừng sinh nhật dễ thương" class="cat-couple-img">
+        <div class="cat-couple-caption">Tuổi đôi mươi, Yêu anh mãi hạnh phúc nhé 🐱❤️🐾</div>
+      </div>
+
+      <a href="#chapter-2" class="scroll-down-hint">
+        <span>Lướt xuống để mở bức thư chúc sinh nhật</span>
+        <span style="font-size: 26px;">👇🐾</span>
+      </a>
+    </section>
+
+    <!-- CHƯƠNG 2: ĐÀN MÈO KÉO LÁ THƯ TỪ BÊN TRÁI RA & DẤU SÁP ĐỎ CHÂN MÈO -->
+    <section class="chapter-section" id="chapter-2">
+      <div class="chapter-envelope-stage">
+        <h2 class="ch-heading-mini">Bức Thư Chúc Sinh Nhật Gửi Mai Phương 💌</h2>
+        <p class="ch-sub-mini">Từng dòng tâm tư anh gửi gắm trọn vẹn vào đây...</p>
+
+        <!-- Chapter 2: Chú mèo đứng đợi ở mép trái, chạm vào để ngoạm dây lôi thư ra -->
+        <div class="interactive-envelope-stage" id="cat-caravan">
+          
+          <!-- Chú Mèo Hoạt Họa Điện Ảnh Ghibli Duy Nhất Đứng Đợi Bên Trái Màn Hình -->
+          <div class="helper-cat-character" id="interactive-cat" title="Chạm vào chú mèo để lôi bức thư ra!">
+            
+            <!-- Bóng thoại hướng dẫn dễ thương -->
+            <div class="cat-action-bubble" id="cat-action-bubble">
+              <span class="bubble-text" id="cat-speech-bubble">Chạm vào tớ để tớ lôi thư ra cho em nhé! 🐱🐾</span>
+            </div>
+
+            <!-- Hình ảnh Chú Mèo Hoạt Họa Điện Ảnh Siêu Đẹp (Ghibli Movie Quality) -->
+            <div class="cat-actor-img-container">
+              <img src="cat_idle_waiting.png?v=2" onerror="if(!this.dataset.t){this.dataset.t=1;this.src='assets/cat_idle_waiting.png?v=2'}" alt="Chú Mèo Hoạt Họa Sinh Nhật" id="cat-actor-img" class="cat-actor-img">
+            </div>
+
+            <!-- Dây Thừng Bổ Trợ Nối Vào Bức Thư Khi Kéo -->
+            <div class="cat-pulling-rope" id="cat-pulling-rope"></div>
+          </div>
+
+          <!-- Phong Bao Thư Cổ Điển Sang Trọng (Giấu bên trái, được mèo ngoạm dây lôi ra) -->
+          <div class="real-envelope-wrapper" id="giant-envelope">
+            
+            <!-- Tem thư cổ điển hình mèo ở góc phải -->
+            <div class="vintage-postage-stamp">
+              <div class="stamp-inner">
+                <span style="font-size: 20px;">🐱</span>
+                <span class="stamp-price">20 TUỔI</span>
+              </div>
+              <div class="postmark-circle">PARIS • AMOUR</div>
+            </div>
+
+            <!-- Nắp phong bao thư tam giác ở trên cùng -->
+            <div class="envelope-top-flap-bar">
+              <div class="envelope-triangle-flap"></div>
+              
+              <!-- Dấu Niêm Phong Sáp Đỏ (Nằm riêng trên chóp nắp, KHÔNG ĐÈ LÊN CHỮ) -->
+              <div class="red-wax-seal" id="wax-paw-seal" title="Chạm vào dấu sáp đỏ để mở thư!">
+                <div class="wax-seal-ring">
+                  <span class="wax-paw-symbol">🐾</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Khu Vực Chữ & Địa Chỉ (Nằm hoàn toàn bên dưới dấu sáp, thoáng đãng đẹp mắt) -->
+            <div class="envelope-address-card">
+              <div class="envelope-handwritten-to">
+                <span class="to-label">Kính gửi:</span>
+                <span class="to-name">Mai Phương - Yêu Yêu Dấu Của Anh 🌸</span>
+              </div>
+              <div class="envelope-handwritten-address">
+                <span>📍 Nơi gửi: Trái tim ấm áp nhất đong đầy tình yêu 💕</span>
+              </div>
+              <div class="envelope-handwritten-date">
+                <span>🎂 Ngày đặc biệt: Sinh nhật tuổi 20 rực rỡ ✨</span>
+              </div>
+            </div>
+
+            <!-- Nút / Thông báo hướng dẫn mở thư bên dưới -->
+            <div class="envelope-action-banner" id="envelope-ready-notice">
+              <span>👆 Chạm vào dấu sáp đỏ bên trên để mở thư 🐾</span>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Unsealed Letter Paper with Typewriter -->
+        <article class="unsealed-letter-paper" id="unsealed-letter">
+          <header class="letter-cat-badge">
+            <span class="letter-to-text">Gửi: Mai Phương - Yêu Yêu Dấu Của Anh 🌸</span>
+            <span class="letter-cat-avatar">🐱🐾</span>
+          </header>
+
+          <div class="letter-typewriter-text" id="typewriter-body"></div><span class="letter-cursor" id="typewriter-cursor"></span>
+
+          <footer class="letter-bottom-bar">
+            <div class="letter-sign-text">Yêu em nhiều hơn mỗi ngày, Mai Phương ❤️</div>
+            <div class="letter-action-btns">
+              <button class="btn-letter-tool" id="btn-skip-typing">Hiện toàn bộ thư</button>
+              <button class="btn-letter-tool" id="btn-replay-typing">Đọc lại ↺</button>
+              <button type="button" class="btn-letter-tool" id="letter-cake-nav-btn" style="display: none;">Đến phần Bánh kem 🎂👇</button>
+            </div>
+          </footer>
+        </article>
+
+        <!-- VÁCH NGĂN 2: HƯỚNG DẪN NHỎ GỌN (CHƯA ĐỌC THƯ THÌ KHÔNG THỂ XUỐNG DƯỚI) -->
+        <div class="mini-barrier-pill locked" id="gate-letter-to-cake">
+          <span class="pill-icon" id="gate-letter-icon">🔒</span>
+          <span class="pill-text" id="gate-letter-status">Hãy đọc hết bức thư chúc sinh nhật bên trên để mở khóa phần tiếp theo nhé 🐾</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CHƯƠNG 3: BÁNH SINH NHẬT - KHUNG NỀN TỐI LUNG LINH & THỔI NẾN, CẮT BÁNH (KHÓA CHO ĐẾN KHI ĐỌC XONG THƯ) -->
+    <section class="chapter-section chapter-dark-mode-section chapter-locked" id="chapter-3">
+      <!-- Glow light effect for pitch dark room -->
+      <div class="candle-spotlight" id="candle-spotlight"></div>
+
+      <div class="cake-header-dimmed" id="cake-header-dimmed">
+        <h2 class="ch3-title">Khoảnh Khắc Nguyện Ước & Thổi Nến 🎂🕯️</h2>
+        <p class="ch3-sub">
+          Không gian lắng đọng chỉ còn ánh nến vàng lung linh...<br>
+          Hãy nhắm mắt lại, ước một điều thật đẹp rồi giữ lâu để thổi nến và cắt bánh nhé em!
+        </p>
+      </div>
+
+      <!-- Grand 4-Tier Patisserie Birthday Cake Stage -->
+      <div class="cake-master-stage" id="cake-interactive-stage">
+        
+        <!-- Knife Actor for slicing animation -->
+        <div class="golden-cutting-knife" id="golden-knife">
+          <div class="knife-handle"></div>
+          <div class="knife-blade"></div>
+          <div class="knife-trail-glow"></div>
+        </div>
+
+        <div class="luxury-cake-wrapper" id="luxury-cake-wrapper">
+          
+          <!-- Candle Assembly (Twin 20 numbers, flame, blow particles, hold ring) -->
+          <div class="cake-candle-assembly" id="cake-candle-assembly" title="Chạm và GIỮ LÂU để thổi tắt nến 💨">
+            
+            <!-- Wind blowing particles -->
+            <div class="blow-wind-stream" id="blow-wind-stream">
+              <span class="wind-burst w1">💨</span>
+              <span class="wind-burst w2">💨</span>
+              <span class="wind-burst w3">💨</span>
+            </div>
+
+            <!-- Flame & Igniter -->
+            <div class="candle-flame-cluster" id="candle-flame-cluster">
+              <div class="candle-ignite-spark" id="candle-ignite-spark"></div>
+              <div class="flame-element" id="candle-flame">
+                <div class="flame-core"></div>
+              </div>
+              <div class="smoke-cloud" id="candle-smoke"></div>
+            </div>
+
+            <!-- Candle Number 20 Stand -->
+            <div class="candle-number-twins">
+              <div class="candle-digit d2">2</div>
+              <div class="candle-digit d0">0</div>
+              <div class="candle-crown-gem">👑</div>
+            </div>
+
+            <!-- Hold-To-Blow Circular Gauge -->
+            <div class="hold-blow-gauge" id="hold-blow-gauge">
+              <svg class="gauge-svg" viewBox="0 0 64 64">
+                <circle class="gauge-track" cx="32" cy="32" r="28" />
+                <circle class="gauge-fill" id="gauge-fill-bar" cx="32" cy="32" r="28" />
+              </svg>
+              <span class="gauge-prompt" id="gauge-prompt">Giữ để thổi 💨</span>
+            </div>
+          </div>
+
+          <!-- Tier 4: Crown Tier (Top - 150px) -->
+          <div class="cake-tier tier-crown" id="tier-4">
+            <div class="tier-half left-half">
+              <div class="cat-ear ear-left"><div class="ear-inner"></div></div>
+              <div class="strawberry-decor left">🍓</div>
+              <div class="fondant-frosting"></div>
+            </div>
+            <div class="tier-half right-half">
+              <div class="cat-ear ear-right"><div class="ear-inner"></div></div>
+              <div class="strawberry-decor right">🍓</div>
+              <div class="fondant-frosting"></div>
+            </div>
+            <div class="tier-cut-crevice" id="cut-crevice-4"></div>
+          </div>
+
+          <!-- Tier 3: Macaron Tier (220px) -->
+          <div class="cake-tier tier-macaron" id="tier-3">
+            <div class="tier-half left-half">
+              <div class="macaron-decor m1">🐱</div>
+              <div class="cream-drip-strip"></div>
+              <div class="fondant-frosting"></div>
+            </div>
+            <div class="tier-half right-half">
+              <div class="macaron-decor m2">🐾</div>
+              <div class="cream-drip-strip"></div>
+              <div class="fondant-frosting"></div>
+            </div>
+            <div class="tier-cut-crevice" id="cut-crevice-3"></div>
+          </div>
+
+          <!-- Tier 2: Floral Rosette Tier (290px) -->
+          <div class="cake-tier tier-rosette" id="tier-2">
+            <div class="tier-half left-half">
+              <div class="piped-shell-border"></div>
+              <div class="fondant-frosting"></div>
+            </div>
+            <div class="tier-half right-half">
+              <div class="piped-shell-border"></div>
+              <div class="fondant-frosting"></div>
+            </div>
+            <!-- Inscription Ribbon -->
+            <div class="cake-gold-plaque" id="cake-gold-plaque">
+              <span>🌸 Mai Phương • Sinh Nhật Tuổi 20 🌸</span>
+            </div>
+            <div class="tier-cut-crevice" id="cut-crevice-2"></div>
+          </div>
+
+          <!-- Tier 1: Grand Velvet Base Tier (360px) -->
+          <div class="cake-tier tier-base" id="tier-1">
+            <div class="tier-half left-half">
+              <div class="fondant-pearl-row"></div>
+              <div class="strawberry-fruit-row">🍓 🐾 🍓</div>
+              <div class="fondant-frosting"></div>
+            </div>
+            <div class="tier-half right-half">
+              <div class="fondant-pearl-row"></div>
+              <div class="strawberry-fruit-row">🍓 🐾 🍓</div>
+              <div class="fondant-frosting"></div>
+            </div>
+            <div class="tier-cut-crevice" id="cut-crevice-1"></div>
+          </div>
+
+          <!-- Royal Golden Pedestal Cake Stand -->
+          <div class="royal-cake-stand">
+            <div class="stand-plate"></div>
+            <div class="stand-pillar"></div>
+            <div class="stand-foot"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="cake-control-actions">
+        <button class="btn-cake-action btn-hold-blow" id="btn-blow-candle" title="Chạm và Giữ 1.8 giây để thổi tắt nến">
+          <span class="btn-icon">🌬️</span>
+          <span class="btn-text" id="btn-blow-text">Giữ lâu để Thổi Tắt Nến 💨</span>
+          <div class="btn-hold-fill" id="btn-hold-fill"></div>
+        </button>
+        <button class="btn-cake-action btn-cut-action" id="btn-cut-cake" disabled>
+          <span class="btn-icon">🔪</span>
+          <span class="btn-text" id="btn-cut-text">Cắt Bánh Sinh Nhật 🍰</span>
+        </button>
+      </div>
+
+      <div class="cake-celebration-message" id="cake-celebration-message"></div>
+
+      <!-- VÁCH NGĂN 3: HƯỚNG DẪN NHỎ GỌN (CHƯA CẮT BÁNH THÌ KHÔNG THỂ XUỐNG DƯỚI) -->
+      <div class="mini-barrier-pill dark-pill locked" id="gate-cake-to-video" title="Thổi nến và cắt bánh để mở khóa phần tiếp theo">
+        <span class="pill-icon" id="gate-cake-icon">🔒</span>
+        <span class="pill-text" id="gate-cake-status">Thổi nến và cắt bánh sinh nhật để mở khóa phần tiếp theo em nhé 🎂✨</span>
+      </div>
+
+      <div style="margin-top: 35px; display: none;" id="cake-video-hint">
+        <a href="#chapter-4" class="scroll-down-hint" style="color: #ffd166;">
+          <span>Xem tiếp lời chúc đặc biệt & thước phim kỷ niệm</span>
+          <span style="font-size: 24px;">👇✨</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- CHƯƠNG 4: LỜI CHÚC TRỰC TIẾP & VIDEO KỶ NIỆM & KÉO RÈM SÂN KHẤU (KHÓA CHO ĐẾN KHI CẮT BÁNH) -->
+    <section class="chapter-section chapter-locked" id="chapter-4">
+      <div class="chapter-finale-stage">
+        <h2 class="ch-heading-mini">Thước Phim Kỷ Niệm Của Riêng Anh 🎬</h2>
+        <p class="ch-sub-mini">
+          Một vài lời tâm sự chân thành cuối cùng anh muốn gửi tới Mai Phương... 💕
+        </p>
+
+        <div class="video-theatre-frame">
+          <div class="theatre-cat-ears">
+            <span style="font-size: 32px;">🐱</span>
+            <span style="font-size: 32px;">🐱</span>
+          </div>
+
+          <video 
+            id="memory-video" 
+            class="video-screen" 
+            controls 
+            preload="metadata" 
+            poster="cute_cat_birthday.jpg"
+          >
+            <source src="WIN_20261015_04_00_46_Pro.mp4" type="video/mp4">
+            Trình duyệt của bạn không hỗ trợ phát video này.
+          </video>
+
+          <p class="video-sweet-note">
+            ✨ Khi em bấm phát video, nhạc nền sẽ tự động dừng lại để em lắng nghe trọn vẹn nhé! ✨
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

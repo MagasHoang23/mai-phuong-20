@@ -1,0 +1,2276 @@
+/* ==========================================================================
+   STYLE.CSS - PHONG CÁCH SINH NHẬT MÈO CƯNG LÃNG MẠN (MAI PHƯƠNG TRÒN 20 TUỔI)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Dancing+Script:wght@600;700&family=Nunito:wght@400;600;700;800;900&family=Pacifico&display=swap');
+
+:root {
+  --primary-pink: #ff6584;
+  --deep-pink: #c9184a;
+  --soft-pink: #ffccd5;
+  --cream-bg: #fff5f7;
+  --peach-warm: #ffe5ec;
+  --cat-gold: #ffd166;
+  --cat-orange: #ff9f1c;
+  --text-dark: #3a1c28;
+  --text-muted: #804e62;
+  --card-bg: rgba(255, 255, 255, 0.92);
+  --card-border: rgba(255, 179, 193, 0.5);
+  --shadow-warm: 0 12px 35px rgba(255, 101, 132, 0.18);
+  --shadow-hover: 0 20px 45px rgba(255, 71, 109, 0.28);
+  --radius-xl: 32px;
+  --radius-lg: 24px;
+  --radius-md: 18px;
+  --transition-smooth: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background-color: var(--cream-bg);
+  color: var(--text-dark);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  transition: background-color 1s ease;
+}
+
+/* Background canvas for hearts, cat paws, sparkles & fireworks */
+#fx-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Custom Paw Trail Particles */
+.cat-paw-trail {
+  position: fixed;
+  pointer-events: none;
+  font-size: 20px;
+  opacity: 0.8;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  animation: pawFade 1.2s forwards ease-out;
+}
+
+@keyframes pawFade {
+  0% { transform: translate(-50%, -50%) scale(0.6) rotate(0deg); opacity: 0.9; }
+  100% { transform: translate(-50%, -70%) scale(1.4) rotate(15deg); opacity: 0; }
+}
+
+/* ==========================================================================
+   0. MÀN HÌNH BẮT ĐẦU: CÁNH CỬA HOÀNG GIA 3D & Ổ KHÓA MÈO ĐỒNG ĐÚC TINH XẢO
+   ========================================================================== */
+.door-lock-viewport {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 20000;
+  perspective: 1600px;
+  overflow: hidden;
+  background: radial-gradient(circle at center, #1f0b15 0%, #0d0408 100%);
+  transition: visibility 1.2s ease, opacity 1s ease;
+}
+
+.door-lock-viewport.opened {
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+  transition-delay: 1.2s;
+}
+
+/* Double Doors Container */
+.double-doors {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  transform-style: preserve-3d;
+}
+
+/* Realistic Rosewood / Mahogany Victorian Door Leaf */
+.door-panel {
+  width: 50%;
+  height: 100%;
+  background: 
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 2px, transparent 2px, transparent 8px),
+    linear-gradient(90deg, #240c16 0%, #3d1726 12%, #542236 45%, #3d1726 85%, #1d0811 100%);
+  position: relative;
+  box-shadow: inset 0 0 120px rgba(0, 0, 0, 0.7);
+  transition: transform 1.6s cubic-bezier(0.77, 0, 0.175, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+}
+
+.door-panel.left-door {
+  transform-origin: left center;
+  border-right: 4px solid #14050b;
+}
+
+.door-panel.right-door {
+  transform-origin: right center;
+  border-left: 4px solid #14050b;
+}
+
+.door-lock-viewport.door-open .door-panel.left-door {
+  transform: rotateY(-112deg);
+}
+
+.door-lock-viewport.door-open .door-panel.right-door {
+  transform: rotateY(112deg);
+}
+
+/* Center Seam Golden Light Leak */
+.door-seam-light {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 3px;
+  height: 100%;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, transparent 0%, #ffd166 20%, #ff758f 50%, #ffd166 80%, transparent 100%);
+  box-shadow: 0 0 20px #ffd166, 0 0 35px #ff476d;
+  opacity: 0.85;
+  pointer-events: none;
+  z-index: 20050;
+  animation: seamGlow 2.5s infinite alternate ease-in-out;
+}
+
+@keyframes seamGlow {
+  0% { opacity: 0.6; filter: blur(0px); }
+  100% { opacity: 1; filter: blur(1.5px); }
+}
+
+/* Vintage Heavy Brass Hinges */
+.door-hinge {
+  position: absolute;
+  width: 14px;
+  height: 95px;
+  background: linear-gradient(90deg, #7a4805 0%, #ffd56b 35%, #fff5cc 55%, #8f5809 100%);
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.8);
+  z-index: 20060;
+}
+
+.door-hinge::before, .door-hinge::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  width: 18px;
+  height: 10px;
+  background: linear-gradient(90deg, #7a4805, #ffd56b, #8f5809);
+  border-radius: 5px;
+}
+.door-hinge::before { top: -6px; }
+.door-hinge::after { bottom: -6px; }
+
+.door-panel.left-door .door-hinge { left: 8px; }
+.door-panel.right-door .door-hinge { right: 8px; }
+.door-hinge.top { top: 12%; }
+.door-hinge.bottom { bottom: 12%; }
+
+/* Recessed Luxury Door Moldings */
+.door-panels-stack {
+  width: 78%;
+  height: 88%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 22px;
+}
+
+.recessed-panel {
+  background: linear-gradient(145deg, #1f0913 0%, #361422 50%, #290d19 100%);
+  border: 4px solid #5a263a;
+  border-radius: 18px;
+  box-shadow: 
+    inset 6px 6px 16px rgba(0, 0, 0, 0.8),
+    inset -4px -4px 12px rgba(255, 180, 200, 0.15),
+    0 2px 6px rgba(0, 0, 0, 0.6);
+  position: relative;
+  outline: 1.5px solid rgba(255, 209, 102, 0.35);
+  outline-offset: -8px;
+  overflow: hidden;
+}
+
+.panel-top {
+  height: 28%;
+}
+
+.panel-inner-glow {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 30%, rgba(255, 209, 102, 0.18) 0%, transparent 70%);
+}
+
+.panel-mid {
+  height: 38%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.panel-inner-carving {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffd166;
+  text-shadow: 0 0 10px rgba(255, 209, 102, 0.6), 0 2px 4px rgba(0,0,0,0.8);
+  letter-spacing: 2px;
+  border: 1px dashed rgba(255, 209, 102, 0.4);
+  padding: 8px 22px;
+  border-radius: 50px;
+}
+
+.panel-bottom {
+  height: 28%;
+}
+
+/* Ornate Antique Brass Handles */
+.door-handle {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20070;
+}
+
+.left-door .door-handle { right: 28px; }
+.right-door .door-handle { left: 28px; }
+
+.handle-plate {
+  width: 22px;
+  height: 140px;
+  background: linear-gradient(90deg, #7a4805, #ffd56b 45%, #fff5cc 60%, #8f5809);
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6), inset 0 1px 3px rgba(255, 255, 255, 0.8);
+}
+
+.handle-lever {
+  position: absolute;
+  top: 48px;
+  width: 75px;
+  height: 18px;
+  background: linear-gradient(180deg, #fff2b2, #e5a93b 40%, #8f5809 100%);
+  border-radius: 9px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.5);
+}
+
+.left-door .handle-lever {
+  right: 12px;
+  transform-origin: right center;
+  border-radius: 12px 4px 4px 12px;
+}
+
+.right-door .handle-lever {
+  left: 12px;
+  transform-origin: left center;
+  border-radius: 4px 12px 12px 4px;
+}
+
+/* Antique Latch Hasp Across Meeting Stile */
+.hasp-plate {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 38px;
+  background: linear-gradient(180deg, #915a0c, #ffd56b 35%, #8a5307 100%);
+  border: 1.5px solid #fff2b2;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  z-index: 20080;
+}
+
+.left-hasp {
+  right: 0;
+  width: 80px;
+  border-radius: 10px 0 0 10px;
+}
+
+.right-hasp {
+  left: 0;
+  width: 80px;
+  border-radius: 0 10px 10px 0;
+}
+
+.hasp-staple-loop {
+  position: absolute;
+  top: 50%;
+  left: -14px;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  border: 6px solid #ffd56b;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Top Door Fullscreen Bar */
+.door-top-bar {
+  position: absolute;
+  top: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20100;
+}
+
+.btn-door-fullscreen {
+  background: rgba(30, 10, 20, 0.85);
+  color: #ffd166;
+  border: 2px solid #ffd166;
+  padding: 10px 24px;
+  border-radius: 50px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 209, 102, 0.4);
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  backdrop-filter: blur(8px);
+}
+
+.btn-door-fullscreen:hover {
+  transform: scale(1.06);
+  background: #ffd166;
+  color: #2b111c;
+}
+
+/* ==========================================================================
+   ULTRA-LUXURY CAST BRASS CAT PADLOCK (Ổ KHÓA MÈO ĐỒNG ĐÚC TINH XẢO)
+   ========================================================================== */
+.cat-padlock-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20200;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.75));
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.cat-padlock-wrapper.padlock-hidden {
+  display: none !important;
+}
+
+.door-lock-viewport.door-open .cat-padlock-wrapper {
+  transform: translate(-50%, -85%) scale(0.5);
+  opacity: 0;
+}
+
+/* Heavy Steel / Chrome Shackle (Quai Khóa Mạ Chrome/Thép Đúc) */
+.cat-shackle {
+  width: 105px;
+  height: 90px;
+  border: 15px solid #dcdcdc;
+  border-bottom: none;
+  border-radius: 60px 60px 0 0;
+  background: transparent;
+  box-shadow: 
+    inset 0 3px 6px rgba(255, 255, 255, 0.9),
+    0 4px 15px rgba(0, 0, 0, 0.5);
+  margin: 0 auto -16px auto !important;
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 1;
+}
+
+.cat-shackle::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: -5px;
+  width: 10px;
+  height: 12px;
+  background: #2b111c;
+  border-radius: 2px;
+}
+
+.cat-shackle.unlocked {
+  transform: translateY(-34px) !important;
+}
+
+/* Sculpted Brass & Rose Gold Cat Lock Body */
+.cat-lock-body {
+  width: 350px;
+  background: 
+    linear-gradient(145deg, #fff3b3 0%, #f7c343 20%, #d49219 45%, #fff1b0 65%, #9e6406 85%, #fadc6e 100%);
+  border: 4px solid #fff8d6;
+  border-radius: 50px 50px 55px 55px;
+  box-shadow: 
+    0 24px 60px rgba(0, 0, 0, 0.7),
+    inset 0 4px 14px rgba(255, 255, 255, 0.9),
+    inset 0 -6px 14px rgba(100, 50, 0, 0.6);
+  padding: 32px 22px 24px;
+  position: relative;
+  text-align: center;
+  z-index: 2;
+}
+
+/* 4 Polished Brass Corner Rivets */
+.lock-rivet {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #ffd56b 40%, #7d4905 100%);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+.lock-rivet.tl { top: 16px; left: 20px; }
+.lock-rivet.tr { top: 16px; right: 20px; }
+.lock-rivet.bl { bottom: 16px; left: 20px; }
+.lock-rivet.br { bottom: 16px; right: 20px; }
+
+/* Sculpted 3D Cat Ears with Rose Gold Insets */
+.lock-cat-ear {
+  position: absolute;
+  top: -26px;
+  width: 0;
+  height: 0;
+  border-left: 26px solid transparent;
+  border-right: 26px solid transparent;
+  border-bottom: 36px solid #f3be44;
+  filter: drop-shadow(0 -3px 5px rgba(0,0,0,0.3));
+}
+
+.lock-cat-ear.left { left: 34px; transform: rotate(-22deg); }
+.lock-cat-ear.right { right: 34px; transform: rotate(22deg); }
+
+.ear-inner-rose {
+  position: absolute;
+  top: 10px;
+  left: -13px;
+  width: 0;
+  height: 0;
+  border-left: 13px solid transparent;
+  border-right: 13px solid transparent;
+  border-bottom: 18px solid #ff758f;
+  filter: drop-shadow(inset 0 1px 3px rgba(0,0,0,0.3));
+}
+
+/* Faceted Obsidian Gem Eyes & Whiskers */
+.lock-cat-face {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  margin-bottom: 18px;
+}
+
+.cat-eye {
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle at 30% 30%, #444 0%, #111 60%, #000 100%);
+  border-radius: 50%;
+  border: 2px solid #ffd166;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.cat-eye .eye-shine {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 6px;
+  height: 6px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 4px #ffffff;
+}
+
+.cat-nose-whiskers {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 800;
+  color: #7a4805;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
+}
+
+.nose-heart {
+  font-size: 18px;
+  animation: noseHeartBeat 2s infinite ease-in-out;
+}
+
+@keyframes noseHeartBeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.18); }
+}
+
+/* High-End Cylindrical Tumbler Dials (6 Con Lăn Trụ Kim Loại) */
+.tumbler-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  background: #17080f;
+  padding: 12px 14px;
+  border-radius: 20px;
+  border: 2px solid #5a2c3d;
+  box-shadow: 
+    inset 0 6px 14px rgba(0, 0, 0, 0.9),
+    0 2px 8px rgba(255, 255, 255, 0.4);
+}
+
+.dial-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.dial-btn {
+  background: linear-gradient(180deg, #4d2334, #2b111c);
+  color: #ffd166;
+  border: 1px solid #7d3a56;
+  width: 36px;
+  height: 24px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.dial-btn:hover {
+  background: #ff476d;
+  color: #ffffff;
+  border-color: #ff758f;
+  transform: scale(1.08);
+}
+
+.dial-btn:active {
+  transform: scale(0.92);
+}
+
+/* 3D Cylindrical Drum Effect for Numbers */
+.dial-digit-window {
+  width: 36px;
+  height: 52px;
+  background: 
+    linear-gradient(180deg, #0d0408 0%, #3a1c27 22%, #632d43 50%, #1f0913 52%, #3a1c27 78%, #0d0408 100%);
+  border: 2px solid #ffd166;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Comfortaa', monospace;
+  font-size: 1.65rem;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(255, 209, 102, 0.9), 0 2px 4px rgba(0,0,0,0.8);
+  box-shadow: 
+    inset 0 3px 6px rgba(0, 0, 0, 0.8),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.8),
+    0 2px 6px rgba(0, 0, 0, 0.5);
+  user-select: none;
+}
+
+/* Embossed Brass Plaque Status Label */
+.lock-status-label {
+  margin-top: 15px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #573300;
+  letter-spacing: 0.5px;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 5px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  display: inline-block;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.7);
+}
+
+/* ==========================================================================
+   TOP AUDIO & FLOATING CONTROLS
+   ========================================================================== */
+/* ==========================================================================
+   TOP AUDIO & FLOATING MUSIC TOGGLE (COMPACT ICON GỌN GÀNG GÓC PHẢI)
+   ========================================================================== */
+.floating-music-btn-icon {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  background: linear-gradient(135deg, #ff758f, #ff476d);
+  color: #ffffff;
+  font-size: 19px;
+  cursor: pointer;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 18px rgba(255, 71, 109, 0.45);
+  backdrop-filter: blur(8px);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  user-select: none;
+}
+
+.floating-music-btn-icon:hover {
+  transform: scale(1.12);
+  box-shadow: 0 6px 24px rgba(255, 71, 109, 0.7);
+}
+
+.floating-music-btn-icon.playing {
+  animation: compactMusicNoteBeat 2s infinite ease-in-out;
+}
+
+@keyframes compactMusicNoteBeat {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.1) rotate(-10deg); }
+  75% { transform: scale(1.1) rotate(10deg); }
+}
+
+/* ==========================================================================
+   CÁC CHƯƠNG TRUYỆN (STORYBOOK SCROLL CHAPTERS)
+   ========================================================================== */
+.story-container {
+  position: relative;
+  z-index: 10;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.chapter-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 70px 0;
+  position: relative;
+  text-align: center;
+}
+
+/* ==========================================================================
+   CHƯƠNG 1: MỞ ĐẦU - CHÚC MỪNG SINH NHẬT MAI PHƯƠNG
+   ========================================================================== */
+.ch1-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  padding: 10px 24px;
+  border-radius: 50px;
+  border: 2px solid var(--soft-pink);
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--primary-pink);
+  box-shadow: 0 8px 20px rgba(255, 101, 132, 0.15);
+  margin-bottom: 22px;
+  animation: bounceSoft 2.5s infinite ease-in-out;
+}
+
+@keyframes bounceSoft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+.ch1-title {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: clamp(1.65rem, 3.2vw, 2.75rem);
+  font-weight: 800;
+  color: var(--deep-pink);
+  line-height: 1.4;
+  margin: 0 auto 16px;
+  text-shadow: 0 4px 18px rgba(255, 101, 132, 0.2);
+  white-space: normal;
+  text-wrap: balance;
+  max-width: 950px;
+}
+
+.ch1-name-highlight {
+  background: linear-gradient(135deg, #ff476d 0%, #ff8fa3 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  position: relative;
+  white-space: nowrap;
+}
+
+.ch1-name-highlight::after {
+  content: '🐾';
+  position: absolute;
+  top: -15px;
+  right: -25px;
+  font-size: 24px;
+  -webkit-text-fill-color: initial;
+}
+
+.ch1-sub {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  max-width: 780px;
+  margin: 0 auto 30px;
+  line-height: 1.7;
+  text-wrap: balance;
+}
+
+/* Picture Frame */
+.cat-couple-card {
+  background: #ffffff;
+  padding: 16px 16px 24px;
+  border-radius: var(--radius-xl);
+  border: 2px solid var(--card-border);
+  box-shadow: var(--shadow-warm);
+  max-width: 440px;
+  width: 100%;
+  transition: transform 0.4s ease;
+  margin-bottom: 35px;
+}
+
+.cat-couple-card:hover {
+  transform: translateY(-8px) rotate(1deg);
+  box-shadow: var(--shadow-hover);
+}
+
+.cat-couple-img {
+  width: 100%;
+  height: 380px;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  display: block;
+}
+
+.cat-couple-caption {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.65rem;
+  color: var(--primary-pink);
+  font-weight: 700;
+  margin-top: 14px;
+}
+
+.scroll-down-hint {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--primary-pink);
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+  text-decoration: none;
+  animation: pulseArrow 2s infinite ease-in-out;
+}
+
+@keyframes pulseArrow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+
+/* ==========================================================================
+   CHƯƠNG 2: ĐÀN MÈO KÉO LÁ THƯ TỪ BÊN TRÁI RA & PHONG BAO THƯ SÁP ĐỎ
+   ========================================================================== */
+.chapter-envelope-stage {
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+  overflow: visible;
+  position: relative;
+}
+
+.ch-heading-mini {
+  font-family: 'Comfortaa', sans-serif;
+  color: var(--deep-pink);
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+}
+
+.ch-sub-mini {
+  color: var(--text-muted);
+  font-size: 1rem;
+  margin-bottom: 30px;
+}
+
+/* Sân khấu chương 2 chứa chú mèo đứng đợi và phong bao thư */
+.interactive-envelope-stage {
+  position: relative;
+  width: 100%;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+/* Chú Mèo Hoạt Họa Điện Ảnh Ghibli Duy Nhất Đứng Đợi Bên Trái */
+.helper-cat-character {
+  position: absolute;
+  left: 25px;
+  bottom: 35px;
+  width: 200px;
+  height: 200px;
+  z-index: 50;
+  cursor: pointer;
+  transition: left 4.8s cubic-bezier(0.25, 0.95, 0.35, 1);
+  filter: drop-shadow(0 12px 24px rgba(255, 101, 132, 0.35));
+}
+
+/* Hào quang lấp lánh mời gọi chạm vào chú mèo */
+.helper-cat-character::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  border: 3.5px dashed var(--primary-pink);
+  opacity: 0.7;
+  animation: catHaloPulse 1.8s infinite ease-in-out;
+  pointer-events: none;
+}
+
+.helper-cat-character.cat-is-pulling::after,
+.helper-cat-character.cat-is-done::after {
+  display: none;
+}
+
+@keyframes catHaloPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.35; }
+  50% { transform: translate(-50%, -50%) scale(1.15); opacity: 0.85; }
+}
+
+.cat-action-bubble {
+  position: absolute;
+  top: -48px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffffff;
+  color: var(--deep-pink);
+  padding: 8px 18px;
+  border-radius: 50px;
+  font-family: 'Nunito', 'Comfortaa', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  border: 2px solid var(--soft-pink);
+  box-shadow: 0 6px 18px rgba(255, 101, 132, 0.25);
+  white-space: nowrap;
+  animation: bubbleBounce 1.8s infinite ease-in-out;
+  z-index: 60;
+  pointer-events: none;
+}
+
+/* Container & Animation cho Chú Mèo Hoạt Họa Ghibli */
+.cat-actor-img-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.cat-actor-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.25s ease, filter 0.3s ease;
+  animation: catBreathingAnim 2.5s infinite ease-in-out;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+@keyframes catBreathingAnim {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-7px) scale(1.02); }
+}
+
+/* Sợi dây thừng kết nối mép phong bì và miệng mèo khi kéo */
+.cat-pulling-rope {
+  display: none;
+  position: absolute;
+  top: 52%;
+  right: calc(100% - 25px);
+  width: 130px;
+  height: 6px;
+  background: repeating-linear-gradient(90deg, #ff8fa3, #ff4d6d 8px, #ffe5ec 14px);
+  border-radius: 4px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  transform: translateY(-50%);
+  z-index: 45;
+}
+
+/* Trạng thái mèo ngoạm dây và kéo vất vả sang giữa */
+.helper-cat-character.cat-is-pulling {
+  left: calc(50% + 220px);
+  width: 230px;
+  height: 230px;
+}
+
+.helper-cat-character.cat-is-pulling .cat-pulling-rope {
+  display: block;
+}
+
+.helper-cat-character.cat-is-pulling .cat-actor-img {
+  animation: catTuggingStrain 0.42s infinite alternate ease-in-out;
+  transform-origin: bottom center;
+}
+
+@keyframes catTuggingStrain {
+  0% { transform: translateY(0) rotate(-3deg); }
+  100% { transform: translateY(-8px) rotate(3deg); }
+}
+
+/* Trạng thái kéo xong: Mèo ngồi vẫy tay tươi cười cạnh phong bì */
+.helper-cat-character.cat-is-done {
+  left: calc(50% + 225px);
+  width: 200px;
+  height: 200px;
+  cursor: default;
+}
+
+.helper-cat-character.cat-is-done .cat-actor-img {
+  animation: catWaveHappy 1.8s infinite ease-in-out;
+}
+
+@keyframes catWaveHappy {
+  0%, 100% { transform: scale(1) translateY(0); }
+  50% { transform: scale(1.06) translateY(-8px); }
+}
+
+/* ==========================================================================
+   PHONG BAO THƯ CỔ ĐIỂN SANG TRỌNG (THIẾT KẾ MỚI, KHÔNG BỊ ĐÈ CHỮ)
+   ========================================================================== */
+.real-envelope-wrapper {
+  width: 100%;
+  max-width: 640px;
+  background: linear-gradient(145deg, #fffafb 0%, #fff0f3 50%, #ffe8ed 100%);
+  border: 2.5px solid #ffccd5;
+  border-radius: 26px;
+  box-shadow: 0 25px 65px rgba(255, 101, 132, 0.22);
+  position: relative;
+  overflow: visible;
+  padding: 30px 32px 28px;
+  cursor: pointer;
+  transform: translateX(-120vw);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 4.8s cubic-bezier(0.25, 0.95, 0.35, 1), opacity 0.8s ease;
+}
+
+.real-envelope-wrapper.pulled-to-center {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.real-envelope-wrapper.pulled-to-center:hover {
+  transform: translateX(0) translateY(-6px) scale(1.01);
+  box-shadow: 0 30px 80px rgba(255, 71, 109, 0.35);
+  border-color: var(--primary-pink);
+}
+
+/* Tem Thư Cổ Điển Góc Phải */
+.vintage-postage-stamp {
+  position: absolute;
+  top: 24px;
+  right: 28px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 10;
+}
+
+.stamp-inner {
+  width: 60px;
+  height: 72px;
+  background: #fff;
+  border: 2px dashed #ff758f;
+  outline: 2px solid #fff;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transform: rotate(4deg);
+}
+
+.stamp-price {
+  font-size: 0.68rem;
+  font-weight: 900;
+  color: var(--deep-pink);
+  margin-top: 2px;
+}
+
+.postmark-circle {
+  border: 1.5px solid rgba(201, 24, 74, 0.4);
+  border-radius: 50%;
+  padding: 6px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: rgba(201, 24, 74, 0.5);
+  transform: rotate(-15deg);
+  letter-spacing: 0.5px;
+}
+
+/* Nắp Phong Bì Tam Giác & Dấu Sáp Đỏ (Nằm riêng trên cùng) */
+.envelope-top-flap-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin-bottom: 22px;
+}
+
+.envelope-triangle-flap {
+  width: 100%;
+  height: 70px;
+  background: linear-gradient(180deg, #ffe0e6 0%, #ffd0db 100%);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 6px 14px rgba(200, 80, 110, 0.15);
+}
+
+/* Dấu Niêm Phong Sáp Đỏ Chân Mèo (Tách biệt hoàn toàn, không đè lên chữ) */
+.red-wax-seal {
+  width: 78px;
+  height: 78px;
+  background: radial-gradient(circle at 35% 35%, #e63946 0%, #c1121f 55%, #780000 100%);
+  border: 3px solid #ff4d6d;
+  border-radius: 50%;
+  box-shadow: 0 10px 25px rgba(120, 0, 0, 0.5), inset 0 2px 5px rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-top: -35px;
+  z-index: 15;
+  animation: waxSealPulse 2s infinite ease-in-out;
+  transition: transform 0.25s ease;
+}
+
+.red-wax-seal:hover {
+  transform: scale(1.12);
+  box-shadow: 0 14px 30px rgba(160, 0, 0, 0.65);
+}
+
+.wax-seal-ring {
+  width: 58px;
+  height: 58px;
+  border: 2px dashed rgba(255, 215, 0, 0.7);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wax-paw-symbol {
+  font-size: 32px;
+  color: #ffd166;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes waxSealPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+/* Khu Vực Chữ & Địa Chỉ (Rộng rãi, thoáng đãng, sang trọng) */
+.envelope-address-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px dashed #ffb3c1;
+  border-radius: 18px;
+  padding: 22px 24px;
+  box-shadow: inset 0 2px 6px rgba(255, 101, 132, 0.08);
+  text-align: left;
+}
+
+.envelope-handwritten-to {
+  margin-bottom: 10px;
+}
+
+.envelope-handwritten-to .to-label {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.envelope-handwritten-to .to-name {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.65rem;
+  color: var(--deep-pink);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.envelope-handwritten-address, .envelope-handwritten-date {
+  font-size: 0.95rem;
+  color: #723d4e;
+  font-weight: 600;
+  margin-top: 5px;
+}
+
+/* Nút Bấm Chỉ Dẫn Mở Thư */
+.envelope-action-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #ff476d, #ff758f);
+  color: #ffffff;
+  padding: 12px 26px;
+  border-radius: 50px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  margin: 20px auto 0;
+  box-shadow: 0 6px 18px rgba(255, 71, 109, 0.35);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: all 0.5s ease;
+  pointer-events: none;
+  max-width: 400px;
+}
+
+.real-envelope-wrapper.arrived .envelope-action-banner {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  animation: bannerBounce 2s infinite ease-in-out;
+}
+
+@keyframes bannerBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+
+/* Unsealed Extended Letter Paper */
+.unsealed-letter-paper {
+  display: none;
+  background: #fffdfc;
+  border: 2px solid #ffccd5;
+  border-radius: var(--radius-xl);
+  box-shadow: 0 25px 70px rgba(255, 101, 132, 0.22);
+  padding: 45px 38px;
+  text-align: left;
+  position: relative;
+  animation: letterSlideDown 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes letterSlideDown {
+  0% { opacity: 0; transform: translateY(-40px) scale(0.95); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.letter-cat-badge {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px dashed #ffccd5;
+  padding-bottom: 18px;
+  margin-bottom: 25px;
+}
+
+.letter-to-text {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--deep-pink);
+}
+
+.letter-cat-avatar {
+  font-size: 32px;
+  animation: catTailWag 2s infinite ease-in-out;
+}
+
+@keyframes catTailWag {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(15deg); }
+}
+
+.letter-typewriter-text {
+  font-size: 1.15rem;
+  line-height: 2;
+  color: #3b202a;
+  min-height: 240px;
+  white-space: pre-line;
+  letter-spacing: 0.2px;
+}
+
+.letter-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 1.25em;
+  background: var(--primary-pink);
+  margin-left: 4px;
+  vertical-align: middle;
+  animation: cursorBlink 0.8s infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.letter-bottom-bar {
+  margin-top: 30px;
+  border-top: 2px dashed #ffccd5;
+  padding-top: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.letter-sign-text {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.9rem;
+  color: var(--primary-pink);
+  font-weight: 700;
+}
+
+.letter-action-btns {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-letter-tool {
+  padding: 8px 18px;
+  border-radius: 50px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  border: 1.5px solid var(--soft-pink);
+  background: #fff;
+  color: var(--primary-pink);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-letter-tool:hover {
+  background: var(--primary-pink);
+  color: #fff;
+}
+
+/* ==========================================================================
+   CHƯƠNG 3: BÁNH SINH NHẬT - KHUNG NỀN TỐI LUNG LINH & THỔI NẾN, CẮT BÁNH
+   ========================================================================== */
+.chapter-dark-mode-section {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  background: #050204; /* Tối sâu huyền ảo */
+  color: #fff;
+  transition: background 1.8s cubic-bezier(0.25, 1, 0.5, 1);
+  padding: 100px 20px 80px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 35px 90px rgba(0, 0, 0, 0.95), inset 0 -35px 90px rgba(0, 0, 0, 0.95);
+}
+
+/* Ánh đèn phòng bật sáng trở lại sau khi cắt bánh xong */
+.chapter-dark-mode-section.room-lights-restored {
+  background: radial-gradient(circle at center, #2e1022 0%, #170712 60%, #0a0207 100%);
+}
+
+/* Tiêu đề chìm nhẹ trong bóng tối để bánh tỏa sáng */
+.cake-header-dimmed {
+  opacity: 0.82;
+  transition: opacity 1.2s ease;
+  margin-bottom: 25px;
+}
+
+.chapter-dark-mode-section.room-lights-restored .cake-header-dimmed {
+  opacity: 1;
+}
+
+.ch3-title {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 2.2rem;
+  color: #ffe5ec;
+  margin-bottom: 10px;
+  text-shadow: 0 0 25px rgba(255, 117, 143, 0.7);
+}
+
+.ch3-sub {
+  color: #ffccd5;
+  font-size: 1.05rem;
+  max-width: 620px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* Vùng rọi sáng duy nhất của ánh nến trong căn phòng tối */
+.candle-spotlight {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 580px;
+  height: 580px;
+  background: radial-gradient(circle, rgba(255, 195, 0, 0.45) 0%, rgba(255, 117, 143, 0.22) 35%, rgba(255, 71, 109, 0.08) 55%, transparent 72%);
+  pointer-events: none;
+  border-radius: 50%;
+  animation: candleGlowPulse 2.4s infinite alternate ease-in-out;
+  transition: opacity 1.2s ease, transform 1s ease;
+}
+
+.candle-spotlight.extinguished {
+  opacity: 0.18;
+  animation: none;
+}
+
+.chapter-dark-mode-section.room-lights-restored .candle-spotlight {
+  background: radial-gradient(circle, rgba(255, 117, 143, 0.35) 0%, rgba(255, 209, 102, 0.25) 45%, transparent 75%);
+  opacity: 1;
+}
+
+@keyframes candleGlowPulse {
+  0% { transform: translate(-50%, -50%) scale(0.96); opacity: 0.8; }
+  100% { transform: translate(-50%, -50%) scale(1.08); opacity: 1; }
+}
+
+/* ==========================================================================
+   CHƯƠNG 3: BÁNH SINH NHẬT 4 TẦNG PATISSERIE LUXURY, THỔI NẾN & CẮT BÁNH
+   ========================================================================== */
+.cake-master-stage {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  margin: 20px auto 35px;
+  perspective: 1000px;
+  transform: scale(0.72) translateY(25px);
+  opacity: 0.55;
+  filter: blur(1.5px);
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.2s ease, filter 1.2s ease;
+}
+
+.cake-master-stage.in-view {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+  filter: blur(0);
+}
+
+.luxury-cake-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* Golden Cutting Knife Actor */
+.golden-cutting-knife {
+  position: absolute;
+  top: -90px;
+  left: 50%;
+  width: 48px;
+  height: 140px;
+  margin-left: -24px;
+  z-index: 80;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(90px, -40px) rotate(35deg);
+  filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.9));
+  transition: opacity 0.3s ease;
+}
+
+.golden-cutting-knife .knife-handle {
+  position: absolute;
+  top: 0;
+  left: 17px;
+  width: 14px;
+  height: 48px;
+  background: linear-gradient(135deg, #780016, #48000c);
+  border: 2px solid #ffd166;
+  border-radius: 6px 6px 2px 2px;
+  box-shadow: inset 0 0 6px #ffd700;
+}
+
+.golden-cutting-knife .knife-blade {
+  position: absolute;
+  top: 46px;
+  left: 19px;
+  width: 10px;
+  height: 90px;
+  background: linear-gradient(to right, #ffffff, #fff3b0, #ffd700);
+  clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+  box-shadow: 0 0 15px #fff;
+}
+
+.golden-cutting-knife.slicing {
+  opacity: 1;
+  animation: knifeSliceSequence 1.5s cubic-bezier(0.25, 1, 0.35, 1) forwards;
+}
+
+@keyframes knifeSliceSequence {
+  0% {
+    opacity: 0;
+    transform: translate(100px, -60px) rotate(45deg);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(0, -30px) rotate(0deg);
+  }
+  50% {
+    transform: translate(0, 10px) rotate(0deg);
+  }
+  80% {
+    transform: translate(0, 310px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0, 360px) scale(0.85);
+    opacity: 0;
+  }
+}
+
+/* Candle Assembly (Twin 20 numbers, Flame, Wind, Circular Gauge) */
+.cake-candle-assembly {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2px;
+  z-index: 20;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+/* Spark Flare on Auto-Ignition */
+.candle-ignite-spark {
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  width: 80px;
+  height: 80px;
+  margin-left: -40px;
+  margin-top: -40px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 15%, #ffd166 45%, rgba(255, 71, 109, 0.8) 75%, transparent 100%);
+  transform: scale(0);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 35;
+}
+
+.candle-ignite-spark.sparking {
+  animation: sparkFlash 0.7s cubic-bezier(0.18, 0.9, 0.3, 1) forwards;
+}
+
+@keyframes sparkFlash {
+  0% { transform: scale(0.1); opacity: 1; }
+  50% { transform: scale(1.6); opacity: 1; filter: drop-shadow(0 0 30px #ffd166); }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* Realistic Multi-layered Flame */
+.candle-flame-cluster {
+  position: relative;
+  width: 28px;
+  height: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.flame-element {
+  position: absolute;
+  bottom: 0;
+  width: 22px;
+  height: 38px;
+  background: radial-gradient(ellipse at bottom, #ffffff 0%, #fff75e 25%, #ff9e00 65%, #ff3b00 100%);
+  border-radius: 50% 50% 25% 25% / 60% 60% 30% 30%;
+  box-shadow: 0 0 25px #ffd166, 0 0 45px #ff758f, 0 0 65px #ff0054;
+  animation: realisticFlameFlicker 1.1s infinite alternate ease-in-out;
+  transform-origin: bottom center;
+  transition: transform 0.2s ease, opacity 0.4s ease;
+  z-index: 10;
+}
+
+.flame-core {
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 16px;
+  background: #ffffff;
+  border-radius: 50% 50% 35% 35%;
+  opacity: 0.9;
+}
+
+/* When User Holds to Blow: Flame Bends Back */
+.cake-candle-assembly.holding .flame-element {
+  transform: rotate(-26deg) scale(0.8, 0.6) skewX(-15deg);
+  filter: blur(0.5px);
+  box-shadow: 0 0 15px #ff9e00, 0 0 30px #ff4800;
+}
+
+.flame-element.blown {
+  opacity: 0 !important;
+  transform: scale(0.1) translateY(-15px) !important;
+  pointer-events: none;
+}
+
+/* Wind Streams while blowing */
+.blow-wind-stream {
+  position: absolute;
+  top: -10px;
+  left: -55px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.cake-candle-assembly.holding .blow-wind-stream {
+  opacity: 1;
+}
+
+.wind-burst {
+  font-size: 16px;
+  animation: windStreamBlow 0.45s infinite linear;
+}
+
+.wind-burst.w2 { animation-delay: 0.15s; font-size: 20px; }
+.wind-burst.w3 { animation-delay: 0.3s; font-size: 14px; }
+
+@keyframes windStreamBlow {
+  0% { transform: translateX(0) scale(0.8); opacity: 0.2; }
+  50% { transform: translateX(35px) scale(1.1); opacity: 0.9; }
+  100% { transform: translateX(65px) scale(0.6); opacity: 0; }
+}
+
+/* Smoke Cloud when extinguished */
+.smoke-cloud {
+  display: none;
+  position: absolute;
+  top: -20px;
+  width: 24px;
+  height: 24px;
+  background: radial-gradient(circle, rgba(230, 230, 230, 0.85) 0%, rgba(180, 180, 180, 0.4) 60%, transparent 100%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.smoke-cloud.active {
+  display: block;
+  animation: smokeBillow 1.6s forwards ease-out;
+}
+
+@keyframes smokeBillow {
+  0% { transform: scale(0.5) translateY(0); opacity: 0.9; }
+  60% { transform: scale(2.4) translateY(-35px) translateX(-6px); opacity: 0.5; }
+  100% { transform: scale(3.5) translateY(-60px) translateX(12px); opacity: 0; }
+}
+
+@keyframes realisticFlameFlicker {
+  0% { transform: scale(0.96) rotate(-2deg); }
+  50% { transform: scale(1.05) rotate(1deg); }
+  100% { transform: scale(1.12) rotate(3deg); }
+}
+
+/* Twin 20 Candle Digits Stand */
+.candle-number-twins {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  gap: 3px;
+  background: linear-gradient(135deg, #ffffff, #fff3b0, #ffd166);
+  border: 2px solid #fff;
+  border-radius: 14px;
+  padding: 3px 12px;
+  box-shadow: 0 4px 18px rgba(255, 209, 102, 0.7), inset 0 1px 2px #ffffff;
+}
+
+.candle-digit {
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 1.45rem;
+  font-weight: 900;
+  color: #a84300;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.9);
+}
+
+.candle-crown-gem {
+  position: absolute;
+  top: -15px;
+  font-size: 14px;
+  filter: drop-shadow(0 0 6px #ffd166);
+}
+
+/* Circular Gauge for Hold-to-Blow */
+.hold-blow-gauge {
+  position: absolute;
+  right: -80px;
+  top: -10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+  opacity: 0.85;
+  transition: opacity 0.3s ease;
+}
+
+.gauge-svg {
+  width: 44px;
+  height: 44px;
+  transform: rotate(-90deg);
+}
+
+.gauge-track {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.2);
+  stroke-width: 4.5;
+}
+
+.gauge-fill {
+  fill: none;
+  stroke: #ffd166;
+  stroke-width: 4.5;
+  stroke-linecap: round;
+  stroke-dasharray: 176;
+  stroke-dashoffset: 176;
+  transition: stroke-dashoffset 0.05s linear;
+}
+
+.gauge-prompt {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #ffd166;
+  margin-top: 3px;
+  white-space: nowrap;
+  text-shadow: 0 0 8px rgba(255, 209, 102, 0.7);
+}
+
+/* ==========================================================================
+   4-TIER ARCHITECTURE WITH SPLIT SLICE ANIMATION
+   ========================================================================== */
+.cake-tier {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-top: -6px;
+  transition: all 0.5s ease;
+}
+
+.tier-half {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+.tier-half.left-half {
+  border-right: none !important;
+  transform-origin: bottom right;
+}
+
+.tier-half.right-half {
+  border-left: none !important;
+  transform-origin: bottom left;
+}
+
+/* Sliced Separation Effect */
+.cake-sliced .tier-half.left-half {
+  transform: translateX(-16px) rotate(-1.5deg);
+}
+
+.cake-sliced .tier-half.right-half {
+  transform: translateX(16px) rotate(1.5deg);
+}
+
+/* Internal Strawberry Jam & Velvety Cream Crevice */
+.tier-cut-crevice {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom, #d90429 0%, #ef233c 30%, #ff758f 65%, #fff0f3 100%);
+  z-index: 5;
+  transition: width 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 0 10px rgba(239, 35, 60, 0.75);
+}
+
+.cake-sliced .tier-cut-crevice {
+  width: 10px;
+}
+
+/* TIER 4: CROWN TIER (Top) */
+.tier-crown {
+  width: 170px;
+  height: 60px;
+  z-index: 15;
+}
+
+.tier-crown .tier-half {
+  width: 85px;
+  background: linear-gradient(to bottom, #ffccd5 0%, #ff8fa3 100%);
+  border-top: 3px solid #ffffff;
+  border-bottom: 2px solid #ff4d6d;
+}
+
+.tier-crown .left-half {
+  border-left: 3px solid #ffffff;
+  border-radius: 18px 0 0 6px;
+}
+
+.tier-crown .right-half {
+  border-right: 3px solid #ffffff;
+  border-radius: 0 18px 6px 0;
+}
+
+.cat-ear {
+  position: absolute;
+  top: -14px;
+  width: 0;
+  height: 0;
+  border-left: 11px solid transparent;
+  border-right: 11px solid transparent;
+  border-bottom: 16px solid #ff476d;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+.cat-ear.ear-left { left: 14px; transform: rotate(-18deg); }
+.cat-ear.ear-right { right: 14px; transform: rotate(18deg); }
+
+.ear-inner {
+  position: absolute;
+  top: 3px;
+  left: -6px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 9px solid #ffe5ec;
+}
+
+.strawberry-decor {
+  position: absolute;
+  top: 6px;
+  font-size: 15px;
+}
+.strawberry-decor.left { left: 12px; }
+.strawberry-decor.right { right: 12px; }
+
+/* TIER 3: MACARON & DRIPPING CREAM TIER */
+.tier-macaron {
+  width: 235px;
+  height: 68px;
+  z-index: 12;
+}
+
+.tier-macaron .tier-half {
+  width: 117.5px;
+  background: linear-gradient(to bottom, #fff0f3 0%, #ffb3c1 100%);
+  border-top: 3px solid #ffffff;
+  border-bottom: 2px solid #ff4d6d;
+}
+
+.tier-macaron .left-half {
+  border-left: 3px solid #ffffff;
+  border-radius: 16px 0 0 6px;
+}
+
+.tier-macaron .right-half {
+  border-right: 3px solid #ffffff;
+  border-radius: 0 16px 6px 0;
+}
+
+.cream-drip-strip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 12px;
+  background: #ffffff;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 2px 4px rgba(255, 71, 109, 0.25);
+}
+
+.macaron-decor {
+  position: absolute;
+  top: 20px;
+  font-size: 18px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25));
+}
+.macaron-decor.m1 { left: 18px; }
+.macaron-decor.m2 { right: 18px; }
+
+/* TIER 2: FLORAL ROSETTE & GOLD PLAQUE TIER */
+.tier-rosette {
+  width: 305px;
+  height: 76px;
+  z-index: 9;
+}
+
+.tier-rosette .tier-half {
+  width: 152.5px;
+  background: linear-gradient(to bottom, #ff8fa3 0%, #ff4d6d 100%);
+  border-top: 3px solid #ffffff;
+  border-bottom: 2px solid #c9184a;
+}
+
+.tier-rosette .left-half {
+  border-left: 3px solid #ffffff;
+  border-radius: 16px 0 0 8px;
+}
+
+.tier-rosette .right-half {
+  border-right: 3px solid #ffffff;
+  border-radius: 0 16px 8px 0;
+}
+
+.piped-shell-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: radial-gradient(circle, #fff 50%, transparent 60%) repeat-x;
+  background-size: 14px 8px;
+}
+
+/* Royal Gold Inscription Plaque */
+.cake-gold-plaque {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #441424, #1f0811);
+  color: #ffd166;
+  border: 1.5px solid #ffd166;
+  border-radius: 30px;
+  padding: 4px 14px;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 800;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5), 0 0 12px rgba(255, 209, 102, 0.4);
+  letter-spacing: 0.5px;
+  z-index: 20;
+  transition: transform 0.6s ease;
+}
+
+.cake-sliced .cake-gold-plaque {
+  transform: translateX(-50%) scale(1.05);
+}
+
+/* TIER 1: GRAND BASE TIER */
+.tier-base {
+  width: 375px;
+  height: 86px;
+  z-index: 6;
+}
+
+.tier-base .tier-half {
+  width: 187.5px;
+  background: linear-gradient(to bottom, #ffccd5 0%, #ff4d6d 60%, #c9184a 100%);
+  border-top: 3px solid #ffffff;
+  border-bottom: 3px solid #590d22;
+}
+
+.tier-base .left-half {
+  border-left: 3px solid #ffffff;
+  border-radius: 20px 0 0 10px;
+}
+
+.tier-base .right-half {
+  border-right: 3px solid #ffffff;
+  border-radius: 0 20px 10px 0;
+}
+
+.fondant-pearl-row {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 7px;
+  background: radial-gradient(circle, #ffffff 60%, #ffe5ec 85%, transparent 95%) repeat-x;
+  background-size: 12px 7px;
+}
+
+.strawberry-fruit-row {
+  position: absolute;
+  bottom: 10px;
+  font-size: 16px;
+  letter-spacing: 8px;
+}
+.tier-base .left-half .strawberry-fruit-row { left: 24px; }
+.tier-base .right-half .strawberry-fruit-row { right: 16px; }
+
+/* Royal Golden Pedestal Stand */
+.royal-cake-stand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 420px;
+  margin-top: -4px;
+  z-index: 3;
+}
+
+.stand-plate {
+  width: 410px;
+  height: 14px;
+  background: linear-gradient(to bottom, #fff3b0 0%, #ffd700 45%, #b38600 100%);
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45), inset 0 2px 4px #ffffff;
+}
+
+.stand-pillar {
+  width: 85px;
+  height: 22px;
+  background: linear-gradient(to right, #b38600, #ffd700 50%, #b38600);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.stand-foot {
+  width: 170px;
+  height: 14px;
+  background: linear-gradient(to bottom, #ffd700 0%, #996515 100%);
+  border-radius: 12px 12px 4px 4px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.55);
+}
+
+/* Cake Control Actions & Interactive Buttons */
+.cake-control-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+  position: relative;
+  z-index: 30;
+}
+
+.btn-cake-action {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #ff476d, #ff758f);
+  color: #ffffff;
+  border: none;
+  padding: 14px 30px;
+  border-radius: 50px;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(255, 71, 109, 0.45);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.3s ease;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.btn-cake-action:hover:not(:disabled) {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 12px 35px rgba(255, 71, 109, 0.65);
+}
+
+.btn-cake-action:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Hold Progress Fill inside Blow Button */
+.btn-hold-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, rgba(255, 209, 102, 0.55), rgba(255, 255, 255, 0.7));
+  pointer-events: none;
+  transition: width 0.05s linear;
+  border-radius: 50px;
+}
+
+/* Cut Action Button */
+.btn-cut-action:not(:disabled) {
+  background: linear-gradient(135deg, #ffd166, #ff9f1c);
+  color: #3b1b00;
+  box-shadow: 0 8px 28px rgba(255, 209, 102, 0.55);
+  animation: cutBtnGlowPulse 1.6s infinite alternate ease-in-out;
+}
+
+@keyframes cutBtnGlowPulse {
+  0% { transform: scale(1); box-shadow: 0 8px 22px rgba(255, 209, 102, 0.5); }
+  100% { transform: scale(1.05); box-shadow: 0 12px 36px rgba(255, 209, 102, 0.85); }
+}
+
+.cake-celebration-message {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #ffd166;
+  margin-top: 22px;
+  min-height: 35px;
+  text-shadow: 0 0 15px rgba(255, 209, 102, 0.6);
+  animation: celebrationPulse 1.5s infinite alternate;
+}
+
+@keyframes celebrationPulse {
+  0% { transform: scale(0.98); }
+  100% { transform: scale(1.04); }
+}
+
+/* ==========================================================================
+   CHƯƠNG 4: LỜI CHÚC TRỰC TIẾP & VIDEO KỶ NIỆM & KÉO RÈM SÂN KHẤU
+   ========================================================================== */
+.chapter-finale-stage {
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.video-theatre-frame {
+  background: #ffffff;
+  padding: 18px;
+  border-radius: var(--radius-xl);
+  border: 3px solid var(--soft-pink);
+  box-shadow: 0 20px 55px rgba(255, 101, 132, 0.25);
+  position: relative;
+  margin-bottom: 25px;
+}
+
+.theatre-cat-ears {
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 160px;
+}
+
+.video-screen {
+  width: 100%;
+  max-height: 520px;
+  border-radius: var(--radius-lg);
+  background: #000;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  display: block;
+}
+
+.video-sweet-note {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  font-weight: 700;
+  margin-top: 15px;
+}
+
+/* ==========================================================================
+   MÀN HÌNH KẾT THÚC TRÊN CÁNH CỬA KHÉP LẠI (FINALE SCREEN & RESTART JOURNEY)
+   ========================================================================== */
+.door-finale-screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: rgba(30, 10, 20, 0.92);
+  border: 3px solid #ffd166;
+  border-radius: var(--radius-xl);
+  padding: 38px 32px;
+  max-width: 540px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.75), 0 0 30px rgba(255, 209, 102, 0.35);
+  backdrop-filter: blur(12px);
+  animation: finaleFadeIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes finaleFadeIn {
+  from { opacity: 0; transform: translate(-50%, -46%) scale(0.92); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+.finale-cat-badge {
+  font-size: 52px;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 4px 10px rgba(255, 101, 132, 0.5));
+  animation: finaleCatPulse 2.2s infinite ease-in-out;
+}
+
+@keyframes finaleCatPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.finale-title {
+  font-family: 'Comfortaa', sans-serif;
+  color: #ffd166;
+  font-size: 1.7rem;
+  font-weight: 800;
+  margin-bottom: 14px;
+  text-shadow: 0 0 15px rgba(255, 209, 102, 0.6);
+}
+
+.finale-sub {
+  color: #ffe5ec;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin-bottom: 26px;
+  font-weight: 600;
+}
+
+/* Nút hình xoay ngược để làm lại từ đầu */
+.btn-restart-journey {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #ff476d, #c9184a);
+  color: #ffffff;
+  border: 2px solid #ffb3c1;
+  padding: 14px 32px;
+  border-radius: 50px;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(255, 71, 109, 0.5);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  user-select: none;
+}
+
+.btn-restart-journey:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 35px rgba(255, 71, 109, 0.7);
+}
+
+.btn-restart-journey .restart-spin-icon {
+  font-size: 1.35rem;
+  line-height: 1;
+  display: inline-block;
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btn-restart-journey:hover .restart-spin-icon {
+  transform: rotate(-360deg);
+}
+
+/* ==========================================================================
+   VÁCH NGĂN NHỎ GỌN (COMPACT PROGRESSION HINT PILLS - KHÔNG TIẾT LỘ NỘI DUNG)
+   ========================================================================== */
+.mini-barrier-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: auto;
+  max-width: 580px;
+  margin: 25px auto 10px;
+  padding: 10px 22px;
+  border-radius: 50px;
+  font-family: 'Comfortaa', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s ease;
+  user-select: none;
+}
+
+.mini-barrier-pill.locked {
+  background: rgba(255, 240, 245, 0.92);
+  border: 1.5px dashed #ff99b0;
+  color: #a8244b;
+}
+
+.mini-barrier-pill.dark-pill.locked {
+  background: rgba(45, 18, 32, 0.88);
+  border: 1.5px dashed rgba(255, 117, 143, 0.5);
+  color: #ffd166;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.mini-barrier-pill.unlocked {
+  background: linear-gradient(135deg, #06d6a0, #04a777);
+  color: #ffffff;
+  border: 1.5px solid #a7f3d0;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(6, 214, 160, 0.4);
+  animation: pillUnlockedPulse 1.8s infinite alternate ease-in-out;
+}
+
+.mini-barrier-pill.unlocked:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 25px rgba(6, 214, 160, 0.6);
+}
+
+@keyframes pillUnlockedPulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.03); }
+}
+
+.mini-barrier-pill .pill-icon {
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.mini-barrier-pill .pill-text {
+  letter-spacing: 0.3px;
+}
+
+/* Ẩn các chương bị khóa và hiệu ứng mở mượt mà */
+.chapter-locked {
+  display: none !important;
+}
+
+.chapter-unlock-reveal {
+  animation: chapterFadeIn 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes chapterFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
